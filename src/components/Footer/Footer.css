@@ -1,0 +1,24 @@
+.Footer {
+  font-size: 15px;
+  color: #808080;
+  padding-inline: 15px;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  margin-top: 3px;
+}
+
+.footer-btn {
+  border: none;
+  color: inherit;
+  background-color: inherit;
+}
+
+.footer-btn:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.footer-btn:focus {
+  outline: none;
+}

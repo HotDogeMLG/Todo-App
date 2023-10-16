@@ -1,0 +1,9 @@
+body {
+  background-color: #f5f5f5;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.App {
+  max-width: 550px;
+  margin-inline: auto;
+}
