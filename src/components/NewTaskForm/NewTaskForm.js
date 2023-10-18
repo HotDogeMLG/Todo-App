@@ -1,7 +1,12 @@
 import React from "react";
 import "./NewTaskForm.css";
+import PropTypes from "prop-types";
 
 class NewTaskForm extends React.Component {
+  static propTypes = {
+    onSubmit: PropTypes.func,
+  };
+
   state = {
     label: "",
   };

@@ -2,23 +2,42 @@ import React from "react";
 import AppHeader from "../AppHeader/AppHeader";
 import TaskList from "../TaskList/TaskList";
 import NewTaskForm from "../NewTaskForm/NewTaskForm";
-import "./App.css";
 import Footer from "../Footer/Footer";
+import "./App.css";
 
 class App extends React.Component {
   state = {
     toDoData: [
-      { label: "Drink coffee", done: false, id: 1, display: true },
-      { label: "Make React App", done: false, id: 2, display: true },
-      { label: "Chill", done: false, id: 3, display: true },
+      {
+        label: "Drink coffee",
+        done: false,
+        important: false,
+        id: 1,
+        display: true,
+        created: new Date().getTime(),
+      },
+      {
+        label: "Make React App",
+        done: false,
+        important: false,
+        id: 2,
+        display: true,
+        created: new Date().getTime(),
+      },
+      {
+        label: "Chill",
+        done: false,
+        important: false,
+        id: 3,
+        display: true,
+        created: new Date().getTime(),
+      },
     ],
   };
 
   deleteTask = (id) => {
     this.setState(({ toDoData }) => {
-      const newElems = toDoData.filter((el) => {
-        if (el.id !== id) return el;
-      });
+      const newElems = toDoData.filter((el) => el.id !== id);
       return { toDoData: newElems };
     });
   };
@@ -35,23 +54,33 @@ class App extends React.Component {
       toDoDataCopy.push({
         label: val,
         done: false,
+        important: false,
         id: maxId + 1,
-        display: "block",
+        display: true,
+        created: new Date().getTime(),
       });
       return { toDoData: toDoDataCopy };
     });
   };
 
-  doTask = (id) => {
+  toggleProperty = (id, property) => {
     this.setState(({ toDoData }) => {
       let newToDoData = toDoData.map((el) => {
-        if (el.id === id) el.done = !el.done;
+        if (el.id === id) el[property] = !el[property];
         return el;
       });
       return {
         toDoData: newToDoData,
       };
     });
+  };
+
+  doTask = (id) => {
+    this.toggleProperty(id, "done");
+  };
+
+  markImportant = (id) => {
+    this.toggleProperty(id, "important");
   };
 
   clearCompletedTasks = () => {
@@ -90,7 +119,6 @@ class App extends React.Component {
 
   render() {
     const tasksLeft = this.state.toDoData.filter((el) => !el.done).length;
-
     return (
       <div className="App">
         <AppHeader />
@@ -106,6 +134,9 @@ class App extends React.Component {
           }}
           onDone={(id) => {
             this.doTask(id);
+          }}
+          onImportant={(id) => {
+            this.markImportant(id);
           }}
         />
         <Footer

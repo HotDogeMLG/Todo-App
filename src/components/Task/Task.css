@@ -19,10 +19,12 @@
   word-break: break-all;
   display: block;
   line-height: 1.2;
-  transition: color 0.4s;
+  transition: color 0.4s, font-weight 0.5s;
   font-weight: 400;
   color: #4d4d4d;
   transition: color 0.5s;
+  margin-right: 15px;
+  word-break: normal;
 }
 
 .done .description {
@@ -30,15 +32,20 @@
   color: gray;
 }
 
+.important .description {
+  color: rgb(117, 69, 69);
+  font-weight: 600;
+}
+
 .created {
   font-size: 13px;
   color: gray;
+  text-align: center;
 }
 
 .Task__btn {
   width: 20px;
   height: 20px;
-  margin: 5px;
   border: none;
   padding: 0;
   background-color: inherit;
@@ -53,6 +60,10 @@
 .Task__btn:hover {
   filter: brightness(1.2);
   cursor: pointer;
+}
+
+.important {
+  margin-right: 2px;
 }
 
 .toggle {

@@ -1,14 +1,39 @@
 import React from "react";
+import PropTypes from "prop-types";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import "./Task.css";
 
 class Task extends React.Component {
+  state = {
+    date: formatDistanceToNow(this.props.created, { includeSeconds: true }),
+  };
+
+  static propTypes = {
+    label: PropTypes.string,
+    done: PropTypes.bool,
+    onDeleted: PropTypes.func,
+    onDone: PropTypes.func,
+  };
+
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState({
+        date: formatDistanceToNow(this.props.created, { includeSeconds: true }),
+      });
+    }, 2000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
   render() {
-    const { label, done, onDeleted, onDone } = this.props;
+    const { label, done, important, onDeleted, onDone, onImportant } =
+      this.props;
 
     let classNames = "Task";
-    if (done) {
-      classNames += " done";
-    }
+    if (done) classNames += " done";
+    if (important) classNames += " important";
 
     return (
       <div className={classNames}>
@@ -24,19 +49,25 @@ class Task extends React.Component {
 
         <label className="Task__label" onClick={onDone}>
           <span className="description">{label}</span>
-          <span className="created">created 5 minutes ago</span>
+          <span className="created">Created {this.state.date} ago</span>
         </label>
 
         <div className="btn-container">
-          <button className="Task__btn redact">
+          <button className="Task__btn important" onClick={onImportant}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="15"
-              height="15"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
-              fill="#cc9a9a"
+              strokeWidth="3"
+              stroke="#cc9a9a"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              <path d="M1.439 16.873l-1.439 7.127 7.128-1.437 16.873-16.872-5.69-5.69-16.872 16.872zm4.702 3.848l-3.582.724.721-3.584 2.861 2.86zm15.031-15.032l-13.617 13.618-2.86-2.861 10.825-10.826 2.846 2.846 1.414-1.414-2.846-2.846 1.377-1.377 2.861 2.86z" />
+              {" "}
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />{" "}
+              <path d="M12 19v.01" /> <path d="M12 15v-10" />{" "}
             </svg>
           </button>
 

@@ -1,6 +1,7 @@
 import React from "react";
-import "./Footer.css";
+import PropTypes from "prop-types";
 import TasksFilter from "../TasksFilter/TasksFilter";
+import "./Footer.css";
 
 const Footer = ({
   itemsLeft,
@@ -28,6 +29,14 @@ const Footer = ({
       </button>
     </div>
   );
+};
+
+Footer.propTypes = {
+  itemsLeft: PropTypes.number,
+  onClear: PropTypes.func,
+  onShowActive: PropTypes.func,
+  onShowAll: PropTypes.func,
+  onShowCompleted: PropTypes.func,
 };
 
 export default Footer;

@@ -1,7 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./TasksFilter.css";
 
 class TasksFilter extends React.Component {
+  static propTypes = {
+    onShowAll: PropTypes.func,
+    onShowActive: PropTypes.func,
+    onShowCompleted: PropTypes.func,
+  };
+
   render() {
     const { onShowActive, onShowAll, onShowCompleted } = this.props;
     return (
