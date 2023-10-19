@@ -1,36 +1,34 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./TasksFilter.css";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-class TasksFilter extends React.Component {
-  static propTypes = {
-    onShowAll: PropTypes.func,
-    onShowActive: PropTypes.func,
-    onShowCompleted: PropTypes.func,
-  };
+import './TasksFilter.css'
 
-  render() {
-    const { onShowActive, onShowAll, onShowCompleted } = this.props;
-    return (
-      <ul className="TasksFilter">
-        <li>
-          <button className="footer-btn" onClick={onShowAll}>
-            All
-          </button>
-        </li>
-        <li>
-          <button className="footer-btn" onClick={onShowActive}>
-            Active
-          </button>
-        </li>
-        <li>
-          <button className="footer-btn" onClick={onShowCompleted}>
-            Completed
-          </button>
-        </li>
-      </ul>
-    );
-  }
+function TasksFilter({ onShowActive, onShowAll, onShowCompleted }) {
+  return (
+    <ul className="TasksFilter">
+      <li>
+        <button type="button" className="footer-btn" onClick={onShowAll}>
+          All
+        </button>
+      </li>
+      <li>
+        <button type="button" className="footer-btn" onClick={onShowActive}>
+          Active
+        </button>
+      </li>
+      <li>
+        <button type="button" className="footer-btn" onClick={onShowCompleted}>
+          Completed
+        </button>
+      </li>
+    </ul>
+  )
 }
 
-export default TasksFilter;
+TasksFilter.propTypes = {
+  onShowAll: PropTypes.func,
+  onShowActive: PropTypes.func,
+  onShowCompleted: PropTypes.func,
+}
+
+export default TasksFilter

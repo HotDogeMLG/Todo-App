@@ -1,35 +1,30 @@
-import React from "react";
-import PropTypes from "prop-types";
-import TasksFilter from "../TasksFilter/TasksFilter";
-import "./Footer.css";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-const Footer = ({
-  itemsLeft,
-  onClear,
-  onShowActive,
-  onShowAll,
-  onShowCompleted,
-}) => {
+import TasksFilter from '../TasksFilter/TasksFilter'
+import './Footer.css'
+
+function Footer({ itemsLeft, onClear, onShowActive, onShowAll, onShowCompleted }) {
   return (
     <div className="Footer">
       <span className="todo-count">{itemsLeft} items left</span>
       <TasksFilter
         onShowActive={() => {
-          onShowActive();
+          onShowActive()
         }}
         onShowAll={() => {
-          onShowAll();
+          onShowAll()
         }}
         onShowCompleted={() => {
-          onShowCompleted();
+          onShowCompleted()
         }}
       />
-      <button className="footer-btn" onClick={onClear}>
+      <button type="button" className="footer-btn" onClick={onClear}>
         Clear completed
       </button>
     </div>
-  );
-};
+  )
+}
 
 Footer.propTypes = {
   itemsLeft: PropTypes.number,
@@ -37,6 +32,6 @@ Footer.propTypes = {
   onShowActive: PropTypes.func,
   onShowAll: PropTypes.func,
   onShowCompleted: PropTypes.func,
-};
+}
 
-export default Footer;
+export default Footer
