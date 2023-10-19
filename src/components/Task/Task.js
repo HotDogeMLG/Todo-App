@@ -5,7 +5,7 @@ import './Task.css'
 
 class Task extends React.Component {
   state = {
-    date: '',
+    date: formatDistanceToNow(this.props.created, { includeSeconds: true }),
   }
 
   static propTypes = {
@@ -15,7 +15,7 @@ class Task extends React.Component {
     onImportant: PropTypes.func,
     onDone: PropTypes.func,
     created: PropTypes.number,
-    important: PropTypes.number,
+    important: PropTypes.bool,
   }
 
   componentDidMount() {
@@ -32,10 +32,7 @@ class Task extends React.Component {
   }
 
   render() {
-    const { label, done, important, onDeleted, onDone, onImportant, created } = this.props
-    this.setState({
-      date: formatDistanceToNow(created, { includeSeconds: true }),
-    })
+    const { label, done, important, onDeleted, onDone, onImportant } = this.props
     const { date } = this.state
 
     let classNames = 'Task'
