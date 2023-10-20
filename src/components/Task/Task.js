@@ -41,8 +41,8 @@ class Task extends React.Component {
 
     return (
       <div className={classNames}>
-        <label htmlFor="Task__checkbox" className="checkbox">
-          <input id="Task__checkbox" checked={done} className="toggle" type="checkbox" onChange={onDone} />
+        <label className="checkbox">
+          <input checked={done} className="toggle" type="checkbox" onChange={onDone} />
           <div className="check-dot" />
         </label>
 
