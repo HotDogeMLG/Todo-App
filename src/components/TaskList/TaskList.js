@@ -18,7 +18,6 @@ function TaskList({ todos, onDeleted, onDone, onImportant }) {
             onDeleted(el.id)
           }}
           onDone={() => {
-            console.log(el.id)
             onDone(el.id)
           }}
           onImportant={() => {
