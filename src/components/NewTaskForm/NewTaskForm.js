@@ -9,6 +9,8 @@ class NewTaskForm extends React.Component {
 
   state = {
     label: '',
+    min: '',
+    sec: '',
   }
 
   changeLabel = (e) => {
@@ -17,27 +19,49 @@ class NewTaskForm extends React.Component {
     })
   }
 
+  changeMins = (e) => {
+    if (!isNaN(e.target.value))
+      this.setState({
+        min: e.target.value,
+      })
+  }
+
+  changeSecs = (e) => {
+    if (!isNaN(e.target.value))
+      this.setState({
+        sec: e.target.value,
+      })
+  }
+
   submitForm = (e) => {
     e.preventDefault()
     const { onSubmit } = this.props
-    const { label } = this.state
-    onSubmit(label)
-    this.setState({
-      label: '',
-    })
+    const { label, min, sec } = this.state
+    if (label && min && sec) {
+      const time = +min * 60 + +sec
+      onSubmit(label, time)
+      this.setState({
+        label: '',
+        min: '',
+        sec: '',
+      })
+    }
   }
 
   render() {
-    const { label } = this.state
+    const { label, min, sec } = this.state
     return (
-      <form onSubmit={this.submitForm}>
+      <form onSubmit={this.submitForm} className="task-form">
         <input
           onChange={this.changeLabel}
           type="text"
-          placeholder="What needs to be done?"
-          className="NewTaskForm"
+          placeholder="Task"
+          className="NewTaskForm new-task"
           value={label}
         />
+        <input onChange={this.changeMins} type="text" placeholder="Min" className="NewTaskForm minutes" value={min} />
+        <input onChange={this.changeSecs} type="text" placeholder="Sec" className="NewTaskForm seconds" value={sec} />
+        <input type="submit" className="form-submit"></input>
       </form>
     )
   }

@@ -16,6 +16,7 @@ class App extends React.Component {
         id: 1,
         display: true,
         created: new Date().getTime(),
+        timer: 1199,
       },
       {
         label: 'Make React App',
@@ -24,6 +25,7 @@ class App extends React.Component {
         id: 2,
         display: true,
         created: new Date().getTime(),
+        timer: 1200,
       },
       {
         label: 'Chill',
@@ -32,6 +34,7 @@ class App extends React.Component {
         id: 3,
         display: true,
         created: new Date().getTime(),
+        timer: 1201,
       },
     ],
   }
@@ -43,7 +46,7 @@ class App extends React.Component {
     })
   }
 
-  addTask = (val) => {
+  addTask = (val, time) => {
     this.setState(({ toDoData }) => {
       const toDoDataCopy = JSON.parse(JSON.stringify(toDoData))
       let maxId = 0
@@ -60,6 +63,7 @@ class App extends React.Component {
         id: maxId + 1,
         display: true,
         created: new Date().getTime(),
+        timer: time,
       })
       return { toDoData: toDoDataCopy }
     })
@@ -121,6 +125,34 @@ class App extends React.Component {
     this.changeDisplay(true, false)
   }
 
+  changeTimer = (id, time) => {
+    this.setState(({ toDoData }) => {
+      const newToDoData = toDoData.map((el) => {
+        const returnEl = JSON.parse(JSON.stringify(el))
+        if (el.id === id) returnEl.timer = time
+        return returnEl
+      })
+      return {
+        toDoData: newToDoData,
+      }
+    })
+  }
+
+  unmount = (id, update) => {
+    this.setState(({ toDoData }) => {
+      const newToDoData = toDoData.map((el) => {
+        const returnEl = JSON.parse(JSON.stringify(el))
+        if (el.id === id)
+          if (update) returnEl.unmountDate = new Date().getTime()
+          else returnEl.unmountDate = null
+        return returnEl
+      })
+      return {
+        toDoData: newToDoData,
+      }
+    })
+  }
+
   render() {
     const { toDoData } = this.state
     const tasksLeft = toDoData.filter((el) => !el.done).length
@@ -128,8 +160,8 @@ class App extends React.Component {
       <div className="App">
         <AppHeader />
         <NewTaskForm
-          onSubmit={(val) => {
-            this.addTask(val)
+          onSubmit={(val, time) => {
+            this.addTask(val, time)
           }}
         />
         <TaskList
@@ -142,6 +174,12 @@ class App extends React.Component {
           }}
           onImportant={(id) => {
             this.markImportant(id)
+          }}
+          onTick={(id, time) => {
+            this.changeTimer(id, time)
+          }}
+          onUnmount={(id, update) => {
+            this.unmount(id, update)
           }}
         />
         <Footer

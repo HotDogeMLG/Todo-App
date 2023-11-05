@@ -2,7 +2,7 @@
   position: relative;
   margin: 0;
   margin-bottom: 4px;
-  width: 100%;
+  width: 30%;
   font-size: 24px;
   font-family: inherit;
   font-weight: inherit;
@@ -14,12 +14,13 @@
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding: 24px 16px 20px 60px;
+  padding: 24px 16px 20px 16px;
   border: none;
   background: white;
   border-radius: 0.2em;
   box-shadow: 0 0 0 0 #cc9a9a;
   transition: box-shadow 0.2s;
+  text-align: center;
 }
 
 .NewTaskForm:focus {
@@ -31,4 +32,26 @@
   font-style: italic;
   font-weight: 100;
   color: #969696;
+}
+
+.task-form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.new-task {
+  width: 59%;
+}
+
+.minutes {
+  width: 19%;
+}
+
+.seconds {
+  width: 19%;
+}
+
+.form-submit {
+  display: none;
 }
