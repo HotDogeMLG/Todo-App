@@ -54,7 +54,7 @@ class Task extends React.Component {
     if (unmountDate === null) this.setState({ paused: true })
 
     const timeDifference = Math.round((new Date().getTime() - unmountDate) / 1000)
-    if (!paused && unmountDate) {
+    if (!paused && unmountDate && timer !== 0) {
       onTick(timer - timeDifference)
       this.setState({ timer: timer - timeDifference })
     }
