@@ -20,6 +20,7 @@
     "allowImportExportEverywhere": true
   },
   "rules": {
+    "no-unused-vars": "warn",
     "indent": ["error", 2],
     "prettier/prettier": "error",
     "linebreak-style": [0, "unix"],
