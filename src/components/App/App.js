@@ -16,24 +16,27 @@ function App() {
     })
   }
 
-  const addTask = (val, time) => {
+  const addTask = (inputVal, taskTimer) => {
+    let maxId = 0
+    maxId = toDoData.reduce((acc, task) => {
+      if (task.id > maxId) {
+        return task.id
+      }
+      return maxId
+    }, 0)
+
+    const currentTime = new Date().getTime()
+
     changeToDoData((prevToDoData) => {
-      const toDoDataCopy = JSON.parse(JSON.stringify(prevToDoData))
-      let maxId = 0
-      maxId = toDoDataCopy.reduce((acc, el) => {
-        if (el.id > maxId) {
-          return el.id
-        }
-        return maxId
-      }, 0)
+      const toDoDataCopy = [...prevToDoData]
       toDoDataCopy.push({
-        label: val,
+        label: inputVal,
         done: false,
         important: false,
         id: maxId + 1,
         display: true,
-        created: new Date().getTime(),
-        timer: time,
+        created: currentTime,
+        timer: taskTimer,
       })
       return toDoDataCopy
     })
@@ -41,11 +44,7 @@ function App() {
 
   const toggleProperty = (id, property) => {
     changeToDoData((prevToDoData) => {
-      const newToDoData = prevToDoData.map((el) => {
-        const returnEl = JSON.parse(JSON.stringify(el))
-        if (el.id === id) returnEl[property] = !returnEl[property]
-        return returnEl
-      })
+      const newToDoData = prevToDoData.map((task) => (task.id === id ? { ...task, [property]: !task[property] } : task))
       return newToDoData
     })
   }
@@ -60,16 +59,16 @@ function App() {
 
   const clearCompletedTasks = () => {
     changeToDoData((prevToDoData) => {
-      const newToDoData = prevToDoData.filter((el) => !el.done)
+      const newToDoData = prevToDoData.filter((task) => !task.done)
       return newToDoData
     })
   }
 
   const changeDisplay = (ifDone, ifActive) => {
     changeToDoData((prevToDoData) => {
-      const newToDoData = prevToDoData.map((el) => {
-        const returnEl = JSON.parse(JSON.stringify(el))
-        if (el.done) returnEl.display = ifDone
+      const newToDoData = prevToDoData.map((task) => {
+        const returnEl = { ...task }
+        if (task.done) returnEl.display = ifDone
         else returnEl.display = ifActive
         return returnEl
       })
@@ -89,22 +88,22 @@ function App() {
     changeDisplay(true, false)
   }
 
-  const changeTimer = (id, time) => {
+  const changeTimer = (id, newTimer) => {
     changeToDoData((prevToDoData) => {
-      const newToDoData = prevToDoData.map((el) => {
-        const returnEl = JSON.parse(JSON.stringify(el))
-        if (el.id === id) returnEl.timer = time
+      const newToDoData = prevToDoData.map((task) => {
+        const returnEl = { ...task }
+        if (task.id === id) returnEl.timer = newTimer
         return returnEl
       })
       return newToDoData
     })
   }
 
-  const unmount = (id, update) => {
+  const setUnmountDate = (id, update) => {
     changeToDoData((prevToDoData) => {
-      const newToDoData = prevToDoData.map((el) => {
-        const returnEl = JSON.parse(JSON.stringify(el))
-        if (el.id === id)
+      const newToDoData = prevToDoData.map((task) => {
+        const returnEl = { ...task }
+        if (task.id === id)
           if (update) returnEl.unmountDate = new Date().getTime()
           else returnEl.unmountDate = null
         return returnEl
@@ -113,13 +112,13 @@ function App() {
     })
   }
 
-  const tasksLeft = toDoData.filter((el) => !el.done).length
+  const tasksLeft = toDoData.filter((task) => !task.done).length
   return (
     <div className="App">
       <AppHeader />
       <NewTaskForm
-        onSubmit={(val, time) => {
-          addTask(val, time)
+        onSubmit={(inputVal, taskTimer) => {
+          addTask(inputVal, taskTimer)
         }}
       />
       <TaskList
@@ -133,11 +132,11 @@ function App() {
         onImportant={(id) => {
           markImportant(id)
         }}
-        onTick={(id, time) => {
-          changeTimer(id, time)
+        onTick={(id, newTimer) => {
+          changeTimer(id, newTimer)
         }}
         onUnmount={(id, update) => {
-          unmount(id, update)
+          setUnmountDate(id, update)
         }}
       />
       <Footer

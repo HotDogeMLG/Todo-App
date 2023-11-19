@@ -12,11 +12,15 @@ function NewTaskForm({ onSubmit }) {
   }
 
   const setMinsFromInput = (e) => {
-    if (!isNaN(e.target.value)) changeMins(e.target.value)
+    if (!isNaN(e.target.value)) {
+      if (e.target.value < 60 && e.target.value >= 0) changeMins(e.target.value)
+    }
   }
 
   const setSecsFromInput = (e) => {
-    if (!isNaN(e.target.value)) changeSecs(e.target.value)
+    if (!isNaN(e.target.value)) {
+      if (e.target.value < 60 && e.target.value >= 0) changeSecs(e.target.value)
+    }
   }
 
   const submitForm = (e) => {
